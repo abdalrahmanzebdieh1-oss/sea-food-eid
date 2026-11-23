@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>أسماك عيد - Sea Food EID | المنيو الإلكتروني</title>
+  <meta name="theme-color" content="#0b74b8" />
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+          colors: {
+            marine: { DEFAULT: '#0b74b8', dark: '#084c7a', light: '#e6f3fb' },
+            sand: { bg: '#f5efe6', border: '#e2d5c3', soft: '#faf6f0' },
+            gold: { DEFAULT: '#d97706', light: '#fef3c7' },
+            navy: '#0f2942'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons & SheetJS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Early Banner Error Handler & Critical Styles (V8.6 Security & Layout) -->
+  <style>
+    .hidden { display: none !important; }
+    * { font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #f5efe6; color: #0f2942; overflow-x: hidden; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .sand-texture {
+      background-color: #f5efe6;
+      background-image: radial-gradient(rgba(11, 116, 184, 0.04) 1px, transparent 1px),
+                        radial-gradient(rgba(217, 119, 6, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-up { animation: slideUp 0.22s ease-out forwards; }
+  </style>
+  <script>
+    window.handleBannerError = function(img) {
+      if (!img) return;
+      img.onerror = null;
+      img.style.display = 'none';
+      var fallback = document.getElementById('bannerFallback');
+      if (fallback) fallback.classList.remove('hidden');
+    };
+  </script>
+</head>
+<body class="sand-texture min-h-screen text-navy antialiased selection:bg-marine selection:text-white">
+
+  <!-- Main App Shell (Max 480px Mobile-First Container) -->
+  <div id="appShell" class="max-w-[480px] mx-auto min-h-screen bg-[#f5efe6] shadow-2xl shadow-[#084c7a]/10 flex flex-col relative pb-24">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-30 bg-[#0b74b8]/95 backdrop-blur-md text-white px-3.5 py-2.5 flex items-center justify-between shadow-md border-b border-white/15">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div id="headerLogoWrap" class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
+          <svg viewBox="0 0 64 64" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="14" fill="#0b74b8"/>
+            <text x="32" y="34" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="900" font-family="Cairo,sans-serif">EID</text>
+            <text x="32" y="51" text-anchor="middle" fill="#fef3c7" font-size="10" font-weight="700" font-family="Cairo,sans-serif">SEA FOOD</text>
+          </svg>
+        </div>
+        <div class="truncate">
+          <h1 id="headerStoreName" class="text-base font-black leading-tight truncate">أسماك عيد</h1>
+          <p id="headerStoreSub" class="text-[11px] text-sky-100 font-semibold truncate">Sea Food EID</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a id="headerCallBtn" href="tel:01111177979" aria-label="اتصال مباشر"
+           class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition flex items-center justify-center text-white">
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
+        </a>
+        <button type="button" onclick="window.shareMenu()" aria-label="مشاركة المنيو"
+                class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 transition flex items-center justify-center text-white">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
+        </button>
+        <button type="button" onclick="window.openAdminAuth()" aria-label="الإدارة"
+                class="w-9 h-9 rounded-xl bg-[#084c7a] hover:bg-[#063a5e] active:scale-95 transition flex items-center justify-center text-amber-300 border border-white/15">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Banner & Store Status -->
+    <section class="relative">
+      <div class="relative h-44 w-full bg-gradient-to-br from-[#0b74b8] via-[#084c7a] to-[#0f2942] overflow-hidden">
+        <img id="bannerImg" src="" alt="غلاف أسماك عيد" onerror="window.handleBannerError(this)"
+             class="w-full h-full object-cover hidden" />
+        <div id="bannerFallback" class="w-full h-full flex flex-col items-center justify-center text-white p-4 relative">
+          <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px); background-size: 18px 18px;"></div>
+          <div class="relative z-10 flex flex-col items-center text-center">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-300/40 text-amber-200 text-xs font-bold mb-2">
+              <i data-lucide="waves" class="w-3.5 h-3.5"></i> مأكولات بحرية طازجة يومياً
+            </span>
+            <h2 id="heroTitle" class="text-2xl font-black tracking-wide drop-shadow">أسماك عيد - Sea Food EID</h2>
+            <p class="text-xs text-sky-100 mt-1 max-w-xs">أشهى الأسماك المشوية والمقلية والطواجن والعروض البحرية</p>
+          </div>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
+      </div>
+
+      <!-- Status & Info Floating Card -->
+      <div class="px-3.5 -mt-6 relative z-10">
+        <div class="bg-white rounded-2xl border border-[#e2d5c3] shadow-sm p-3.5">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div id="workStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold"></div>
+            <div id="workHoursText" class="text-xs text-slate-500 font-semibold flex items-center gap-1">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-[#0b74b8]"></i>
+              <span></span>
+            </div>
+          </div>
+          <div class="mt-2.5 pt-2.5 border-t border-[#f0e6d8] flex items-start gap-2 text-xs text-[#0f2942]">
+            <i data-lucide="map-pin" class="w-4 h-4 text-[#d97706] shrink-0 mt-0.5"></i>
+            <span id="storeAddressText" class="font-semibold leading-relaxed"></span>
+          </div>
+          <div id="syncStatusBar" class="hidden mt-2 text-[11px] font-bold text-[#0b74b8] flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3 h-3 animate-spin"></i>
+            <span>جاري تحديث المنيو تلقائياً...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Category Tabs (Sticky) -->
+    <section class="sticky top-[60px] z-20 bg-[#f5efe6]/95 backdrop-blur-md pt-3 pb-2 px-3.5 border-b border-[#e2d5c3]/70">
+      <div class="relative mb-2.5">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+        <input id="searchInput" type="text" oninput="window.handleSearch(this.value)" placeholder="ابحث عن عرض، وجبة، مشويات، طاجن، جمبري..."
+               class="w-full bg-white border border-[#e2d5c3] rounded-xl pr-10 pl-9 py-2.5 text-sm font-semibold text-navy placeholder:text-slate-400 focus:outline-none focus:border-[#0b74b8] focus:ring-2 focus:ring-[#0b74b8]/15 transition" />
+        <button id="clearSearchBtn" type="button" onclick="window.clearSearch()"
+                class="hidden absolute left-2.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200">
+          <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+      <div id="categoryTabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1"></div>
+    </section>
+
+    <!-- Menu Items Container -->
+    <main id="menuContainer" class="flex-1 px-3.5 py-4 space-y-6"></main>
+
+    <!-- Footer -->
+    <footer class="mt-6 px-4 pt-6 pb-8 bg-[#084c7a] text-white rounded-t-3xl border-t-4 border-[#d97706]">
+      <div class="text-center space-y-3">
+        <h3 id="footerStoreName" class="text-lg font-black">أسماك عيد - Sea Food EID</h3>
+        <p id="footerAddress" class="text-xs text-sky-100 leading-relaxed max-w-xs mx-auto"></p>
+
+        <div class="flex items-center justify-center gap-2 flex-wrap pt-1">
+          <a id="footerPhone1" href="tel:01111177979"
+             class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl text-xs font-bold transition">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>01111177979</span>
+          </a>
+          <a id="footerPhone2" href="tel:01200088852"
+             class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl text-xs font-bold transition">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>01200088852</span>
+          </a>
+        </div>
+
+        <div id="footerSocialLinks" class="flex items-center justify-center gap-2.5 flex-wrap pt-1"></div>
+
+        <div class="pt-4 mt-3 border-t border-white/15">
+          <a href="https://wa.me/201000000000" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-bold text-amber-200 transition">
+            <span>تم التطوير بواسطة مَنظومة تك ⚡</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating Bottom Cart Bar -->
+    <div id="floatingCartBar" class="hidden fixed bottom-3 inset-x-0 z-30 max-w-[480px] mx-auto px-3.5 pointer-events-none">
+      <button type="button" onclick="window.openCartModal()"
+              class="pointer-events-auto w-full bg-[#0b74b8] hover:bg-[#084c7a] active:scale-[0.99] text-white rounded-2xl p-3.5 shadow-xl shadow-[#084c7a]/35 border border-white/20 flex items-center justify-between transition">
+        <div class="flex items-center gap-2.5">
+          <span id="cartCountBadge" class="w-7 h-7 rounded-xl bg-[#d97706] text-white font-black text-sm flex items-center justify-center shadow">0</span>
+          <div class="text-right">
+            <p class="text-xs font-extrabold leading-tight">عرض سلة الطلبات</p>
+            <p id="cartBarSubtext" class="text-[11px] text-sky-100 font-semibold"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 font-black text-base">
+          <span id="cartTotalBar">0 ج.م</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </div>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-[420px] pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- Single Modal Container -->
+  <div id="modalContainer"></div>
+
+  <!-- Core Application Script (Manzoma Tech V8.6) -->
+  <script>
+    (function () {
+      'use strict';
+
+      const STORE_ID = "mt_asamak_eid_v3";
+      const STORAGE_KEYS = {
+        DATA: `${STORE_ID}_data`,
+        CART: `${STORE_ID}_cart`,
+        PASS: `${STORE_ID}_pass`,
+        SHEET: `${STORE_ID}_sheet`
+      };
+
+      let DEFAULT_VIEW_ONLY = false;
+      let DEFAULT_SHEET_URL = "";
+
+      const checkVendorKey = (k) => String(k || '').trim().split('').map(c => c.charCodeAt(0) + 7).join(',') === '84,91,52,87,89,86,52,57,55,57,61';
+
+      function pureHash(str) {
+        let h = 2166136261;
+        for (let i = 0; i < str.length; i++) {
+          h ^= str.charCodeAt(i);
+          h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+        }
+        return (h >>> 0).toString(16);
+      }
+
+      const DEFAULT_PASS_HASH = pureHash("admin123");
+
+      function sanitize(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function normalizeArabicInput(str) {
+        if (!str) return '';
+        const arabicNums = '٠١٢٣٤٥٦٧٨٩';
+        const persianNums = '۰۱۲۳۴۵۶۷۸۹';
+        return String(str).trim().replace(/[٠-٩۰-۹]/g, ch => {
+          const idx1 = arabicNums.indexOf(ch);
+          if (idx1 > -1) return String(idx1);
+          const idx2 = persianNums.indexOf(ch);
+          if (idx2 > -1) return String(idx2);
+          return ch;
+        });
+      }
+
+      function formatDirectImageUrl(url) {
+        if (!url) return '';
+        const clean = String(url).trim();
+        const driveMatch = clean.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)|docs\.google\.com\/uc\?id=)([a-zA-Z0-9_-]{25,})/);
+        if (driveMatch && driveMatch[1]) {
+          return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+        }
+        return clean;
+      }
+
+      const DEFAULT_DATA = {
+        settings: {
+          name: "أسماك عيد",
+          subtitle: "Sea Food EID",
+          whatsapp: "201111177979",
+          phone1: "01111177979",
+          phone2: "01200088852",
+          address: "المقطم - آخر شارع 9 بعد القسم اتجاه مدينة نصر",
+          openTime: "12:00",
+          closeTime: "02:00",
+          bannerUrl: "",
+          logoUrl: "",
+          mapsUrl: "",
+          facebookUrl: "",
+          instagramUrl: "",
+          tiktokUrl: "",
+          instapayInfo: "01111177979",
+          couponsEnabled: true,
+          viewOnlyMode: DEFAULT_VIEW_ONLY
+        },
+        categories: ["🔥 العروض", "الوجبات", "السندوتشات", "الشوربة", "المشويات", "المقليات", "الصواني", "الطواجن"],
+        items: [
+          // 0. 🔥 العروض
+          { id: 101, category: "🔥 العروض", name: "عرض السرعة - 3 سندوتشات جمبري", price: 100, priceLabel: "", desc: "3 سندوتشات جمبري + سلطة + طحينة (الحق العرض قبل ما يخلص!)", image: "", available: true, isOffer: true, options: [] },
+          { id: 102, category: "🔥 العروض", name: "عرض السرعة - 4 سندوتشات فيليه", price: 100, priceLabel: "", desc: "4 سندوتشات فيليه + سلطة + طحينة (الحق العرض قبل ما يخلص!)", image: "", available: true, isOffer: true, options: [] },
+          { id: 103, category: "🔥 العروض", name: "عرض الـ 130 جنيه", price: 130, priceLabel: "", desc: "وحدة أرز عليه فيليه وجمبري + شوربة سي فود + طحينة + سلطة + عيش (عرض محدود لمدة 3 أيام)", image: "", available: true, isOffer: true, options: [] },
+          { id: 104, category: "🔥 العروض", name: "صينية أسماك عيد", price: 550, priceLabel: "", desc: "3 سمكات بلطي مقلي + 6 حبات جمبري مقلي بالرأس والديل + 6 قطع فيليه + 3 شوربة جمبري", image: "", available: true, isOffer: true, options: [] },
+          { id: 105, category: "🔥 العروض", name: "عرض الفيليه", price: 80, priceLabel: "", desc: "4 قطع فيليه + رز + طحينة + مخلل + عيش", image: "", available: true, isOffer: true, options: [] },
+          { id: 106, category: "🔥 العروض", name: "عرض البلطي", price: 80, priceLabel: "", desc: "سمكة بلطي مقلية + رز + سلطة + طحينة + عيش", image: "", available: true, isOffer: true, options: [] },
+          { id: 107, category: "🔥 العروض", name: "عرض السندوتشات (4 سندوتشات)", price: 100, priceLabel: "", desc: "اختيارك من 4 سندوتشات جمبري أو 4 سندوتشات فيليه", image: "", available: true, isOffer: true, options: [{ name: "4 سندوتشات جمبري", price: 100 }, { name: "4 سندوتشات فيليه", price: 100 }] },
+          { id: 108, category: "🔥 العروض", name: "الوجبة الكاملة", price: 100, priceLabel: "", desc: "سندوتش جمبري + سندوتش فيليه + رز بالجمبري + سلطة + طحينة", image: "", available: true, isOffer: true, options: [] },
+          { id: 109, category: "🔥 العروض", name: "عرض عشاق الجمبري", price: 120, priceLabel: "", desc: "5 حبات جمبري (مقلي أو مشوي) + رز + سلطة + طحينة + عيش", image: "", available: true, isOffer: true, options: [{ name: "مقلي", price: 120 }, { name: "مشوي", price: 120 }] },
+
+          // 1. الوجبات
+          { id: 1, category: "الوجبات", name: "وجبة عيد السوبر", price: 80, priceLabel: "", desc: "2 قطعة فيليه + جمبري صغير + أرز + طحينة وسلطة وعيش", image: "", available: true, options: [] },
+          { id: 2, category: "الوجبات", name: "وجبة فيليه", price: 80, priceLabel: "", desc: "قطع فيليه مقرمشة مع أرز صيادية وسلطة وطحينة وعيش", image: "", available: true, options: [] },
+          { id: 3, category: "الوجبات", name: "وجبة الجمبري", price: 80, priceLabel: "", desc: "وجبة جمبري طازج مع أرز صيادية وسلطة وطحينة وعيش", image: "", available: true, options: [{ name: "وسط", price: 80 }, { name: "كبير", price: 120 }] },
+          { id: 4, category: "الوجبات", name: "وجبة سبيط", price: 100, priceLabel: "", desc: "سبيط مقلي ذهبي مع أرز صيادية وسلطة وطحينة وعيش", image: "", available: true, options: [] },
+          { id: 5, category: "الوجبات", name: "وجبة بلطي", price: 80, priceLabel: "", desc: "سمك بلطي طازج مع أرز صيادية وسلطة وطحينة وعيش", image: "", available: true, options: [] },
+          { id: 6, category: "الوجبات", name: "أرز صيادية", price: 25, priceLabel: "", desc: "أرز صيادية بني متبل على طريقة أسماك عيد", image: "", available: true, options: [{ name: "وسط", price: 25 }, { name: "كبير", price: 45 }] },
+
+          // 2. السندوتشات
+          { id: 7, category: "السندوتشات", name: "رغيف جمبري", price: 60, priceLabel: "", desc: "سندوتش جمبري طازج بالخلطة والطحينة والجرجير", image: "", available: true, options: [{ name: "وسط", price: 60 }, { name: "كبير", price: 100 }] },
+          { id: 8, category: "السندوتشات", name: "رغيف فيليه", price: 50, priceLabel: "", desc: "سندوتش فيليه سمك مقرمش مع صوص الطحينة والسلطة", image: "", available: true, options: [] },
+          { id: 9, category: "السندوتشات", name: "رغيف مشكل", price: 50, priceLabel: "", desc: "تشكيلة سي فود مميزة مع طحينة وسلطة", image: "", available: true, options: [{ name: "وسط", price: 50 }, { name: "كبير", price: 70 }] },
+          { id: 10, category: "السندوتشات", name: "رغيف سبيط", price: 90, priceLabel: "", desc: "سندوتش سبيط بلدي مقلي مع الطحينة والسلطة", image: "", available: true, options: [] },
+
+          // 3. الشوربة
+          { id: 11, category: "الشوربة", name: "شوربة سي فود مخلية", price: 150, priceLabel: "", desc: "شوربة غنية بفواكه البحر المخلية والكريمة", image: "", available: true, options: [] },
+          { id: 12, category: "الشوربة", name: "شوربة جمبري", price: 150, priceLabel: "", desc: "شوربة جمبري طازج بالتوابل البحرية الخاصة", image: "", available: true, options: [] },
+          { id: 13, category: "الشوربة", name: "ملوخية بالجمبري", price: 100, priceLabel: "", desc: "طاجن ملوخية خضراء مطبوخة بالجمبري الطازج", image: "", available: true, options: [] },
+          { id: 14, category: "الشوربة", name: "مكرونة بشاميل بالسي فود", price: 150, priceLabel: "", desc: "طاجن مكرونة بالبشاميل الكريمي وتشكيلة السي فود", image: "", available: true, options: [] },
+
+          // 4. المشويات (سعر الكيلو)
+          { id: 15, category: "المشويات", name: "بلطي مشوي (كيلو)", price: 160, priceLabel: "", desc: "متاح ردة أو زيت وليمون أو سنجاري - السعر للكيلو", image: "", available: true, options: [{ name: "ردة", price: 160 }, { name: "زيت وليمون", price: 160 }, { name: "سنجاري", price: 160 }] },
+          { id: 16, category: "المشويات", name: "بوري مشوي (كيلو)", price: 360, priceLabel: "", desc: "متاح ردة أو زيت وليمون أو سنجاري - السعر للكيلو", image: "", available: true, options: [{ name: "ردة", price: 360 }, { name: "زيت وليمون", price: 360 }, { name: "سنجاري", price: 360 }] },
+          { id: 17, category: "المشويات", name: "فيليه مشوي (كيلو)", price: 400, priceLabel: "", desc: "متاح بالزبدة أو زيت وليمون - السعر للكيلو", image: "", available: true, options: [{ name: "زبدة", price: 400 }, { name: "زيت وليمون", price: 400 }] },
+          { id: 18, category: "المشويات", name: "ماكريل أصلي (كيلو)", price: 400, priceLabel: "", desc: "متاح بالزبدة أو زيت وليمون أو سنجاري - السعر للكيلو", image: "", available: true, options: [{ name: "زبدة", price: 400 }, { name: "زيت وليمون", price: 400 }] },
+          { id: 19, category: "المشويات", name: "جمبري مشوي", price: 0, priceLabel: "سعر اليوم", desc: "جمبري طازج مشوي على الجريل - يُحدد السعر حسب سعر اليوم", image: "", available: true, options: [] },
+          { id: 20, category: "المشويات", name: "جمبري بترفلاي", price: 0, priceLabel: "سعر اليوم", desc: "جمبري بترفلاي بالزبدة والثوم والأعشاب - يُحدد السعر حسب سعر اليوم", image: "", available: true, options: [] },
+
+          // 5. المقليات (سعر الكيلو)
+          { id: 21, category: "المقليات", name: "بلطي مقلي (كيلو)", price: 160, priceLabel: "", desc: "سمك بلطي مقلي مقرمش بتتبيلة أسماك عيد - السعر للكيلو", image: "", available: true, options: [] },
+          { id: 22, category: "المقليات", name: "مكرونة بلدي (كيلو)", price: 400, priceLabel: "", desc: "سمك مكرونة بلدي مقلي ذهبي - السعر للكيلو", image: "", available: true, options: [] },
+          { id: 23, category: "المقليات", name: "فيليه مقلي (كيلو)", price: 400, priceLabel: "", desc: "فيليه سمك طازج مقلي مقرمش - السعر للكيلو", image: "", available: true, options: [] },
+          { id: 24, category: "المقليات", name: "جزل بياض (كيلو)", price: 360, priceLabel: "", desc: "جزل سمك بياض بلدي مقلي - السعر للكيلو", image: "", available: true, options: [] },
+          { id: 25, category: "المقليات", name: "جمبري كبير مقلي", price: 0, priceLabel: "سعر اليوم", desc: "جمبري جامبو مقلي مقرمش - حسب سعر اليوم", image: "", available: true, options: [] },
+          { id: 26, category: "المقليات", name: "جمبري صغير مقلي", price: 0, priceLabel: "سعر اليوم", desc: "جمبري بلدي صغير مقلي - حسب سعر اليوم", image: "", available: true, options: [] },
+          { id: 27, category: "المقليات", name: "تعابين بلدي", price: 0, priceLabel: "سعر اليوم", desc: "تعابين بحر بلدي طازجة - حسب سعر اليوم", image: "", available: true, options: [] },
+          { id: 28, category: "المقليات", name: "تعابين حمراء (كيلو)", price: 400, priceLabel: "", desc: "تعابين حمراء مقلية بتتبيلة خاصة - السعر للكيلو", image: "", available: true, options: [] },
+          { id: 29, category: "المقليات", name: "سبيط مقلي (كيلو)", price: 800, priceLabel: "", desc: "سبيط بلدي مقلي مقرمش - السعر للكيلو", image: "", available: true, options: [] },
+
+          // 6. الصواني
+          { id: 30, category: "الصواني", name: "صينية بوري بالبطاطس (كيلو)", price: 360, priceLabel: "", desc: "سمك بوري طازج في الفرن مع شرائح البطاطس والتوابل", image: "", available: true, options: [] },
+          { id: 31, category: "الصواني", name: "صينية ماكريل بالبطاطس (كيلو)", price: 400, priceLabel: "", desc: "سمك ماكريل أصلي في الفرن مع البطاطس والصلصة", image: "", available: true, options: [] },
+
+          // 7. الطواجن (حسب الموازين)
+          { id: 32, category: "الطواجن", name: "طاجن جمبري", price: 0, priceLabel: "حسب الموازين", desc: "طاجن جمبري بالصلصة والتوابل في الفرن - يُسعّر حسب الوزن", image: "", available: true, options: [] },
+          { id: 33, category: "الطواجن", name: "طاجن جمبري وايت صوص", price: 0, priceLabel: "حسب الموازين", desc: "طاجن جمبري بالصوص الأبيض والكريمة والجبن - يُسعّر حسب الوزن", image: "", available: true, options: [] },
+          { id: 34, category: "الطواجن", name: "طاجن سي فود", price: 0, priceLabel: "حسب الموازين", desc: "تشكيلة فواكه البحر في الفرن - يُسعّر حسب الوزن", image: "", available: true, options: [] },
+          { id: 35, category: "الطواجن", name: "طاجن فيليه", price: 0, priceLabel: "حسب الموازين", desc: "طاجن قطع فيليه سمك بالخلطة في الفرن - يُسعّر حسب الوزن", image: "", available: true, options: [] },
+          { id: 36, category: "الطواجن", name: "طاجن سبيط", price: 0, priceLabel: "حسب الموازين", desc: "طاجن سبيط بلدي في الفرن - يُسعّر حسب الوزن", image: "", available: true, options: [] },
+          { id: 37, category: "الطواجن", name: "طاجن ميكس", price: 0, priceLabel: "حسب الموازين", desc: "طاجن ميكس بحريات شامل - يُسعّر حسب الوزن", image: "", available: true, options: [] }
+        ],
+        deliveryZones: [
+          { id: 1, name: "المقطم - شارع 9 والهضبة الوسطى", fee: 20 },
+          { id: 2, name: "مدينة نصر", fee: 35 },
+          { id: 3, name: "المعادي وزهراء المعادي", fee: 35 },
+          { id: 4, name: "التجمع الخامس والقاهرة الجديدة", fee: 50 }
+        ],
+        addons: [
+          { id: 1, name: "سلطة طحينة إضافية", price: 15 },
+          { id: 2, name: "سلطة خضراء بلدي", price: 15 },
+          { id: 3, name: "بابا غنوج", price: 20 },
+          { id: 4, name: "عيش بلدي إضافي (3 أرغفة)", price: 10 }
+        ],
+        coupons: [
+          { code: "WELCOME10", type: "percent", value: 10, active: true },
+          { code: "EID25", type: "fixed", value: 25, active: true }
+        ]
+      };
+
+      let state = {
+        data: loadStoreData(),
+        cart: loadCart(),
+        activeCategory: "🔥 العروض",
+        searchQuery: "",
+        orderMode: "delivery",
+        selectedZoneId: 1,
+        paymentMethod: "cash",
+        appliedCoupon: null,
+        gpsCoords: "",
+        adminUnlocked: false,
+        vendorUnlocked: false,
+        adminTab: "general",
+        editingItemId: null
+      };
+
+      function loadStoreData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEYS.DATA);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            return {
+              settings: Object.assign({}, DEFAULT_DATA.settings, parsed.settings || {}),
+              categories: Array.isArray(parsed.categories) && parsed.categories.length ? parsed.categories : DEFAULT_DATA.categories,
+              items: Array.isArray(parsed.items) ? parsed.items : DEFAULT_DATA.items,
+              deliveryZones: Array.isArray(parsed.deliveryZones) ? parsed.deliveryZones : DEFAULT_DATA.deliveryZones,
+              addons: Array.isArray(parsed.addons) ? parsed.addons : DEFAULT_DATA.addons,
+              coupons: Array.isArray(parsed.coupons) ? parsed.coupons : DEFAULT_DATA.coupons
+            };
+          }
+        } catch (e) { /* fallback */ }
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+      }
+
+      function saveStoreData() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(state.data));
+        } catch (e) {
+          showToast("تنبيه: مساحة التخزين ممتلئة، يُفضل تقليل حجم الصور", "error");
+        }
+      }
+
+      function loadCart() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEYS.CART);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) { return []; }
+      }
+
+      function saveCart() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(state.cart));
+        } catch (e) { /* ignore */ }
+      }
+
+      function isStoreOpen() {
+        try {
+          const { openTime, closeTime } = state.data.settings;
+          if (!openTime || !closeTime) return true;
+          const now = new Date();
+          const curMins = now.getHours() * 60 + now.getMinutes();
+          const [oh, om] = openTime.split(':').map(Number);
+          const [ch, cm] = closeTime.split(':').map(Number);
+          const openMins = oh * 60 + (om || 0);
+          const closeMins = ch * 60 + (cm || 0);
+
+          if (closeMins < openMins) {
+            return curMins >= openMins || curMins <= closeMins;
+          }
+          return curMins >= openMins && curMins <= closeMins;
+        } catch (e) {
+          return true;
+        }
+      }
+
+      function formatTime12(t24) {
+        if (!t24) return '';
+        const [hStr, mStr] = t24.split(':');
+        let h = parseInt(hStr, 10);
+        const period = h >= 12 ? 'م' : 'ص';
+        h = h % 12 || 12;
+        return `${h}:${mStr || '00'} ${period}`;
+      }
+
+      function showToast(msg, type = "info") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+        const el = document.createElement("div");
+        const bg = type === "error" ? "bg-rose-600" : type === "success" ? "bg-emerald-600" : "bg-[#0f2942]";
+        el.className = `${bg} text-white px-4 py-3 rounded-2xl shadow-lg text-xs font-bold flex items-center justify-between gap-2 animate-slide-up pointer-events-auto`;
+        el.innerHTML = `<span>${sanitize(msg)}</span>`;
+        container.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = "0";
+          el.style.transition = "opacity 0.25s";
+          setTimeout(() => el.remove(), 260);
+        }, 2800);
+      }
+
+      function renderApp() {
+        renderHeaderAndBanner();
+        renderCategoryTabs();
+        renderMenu();
+        renderFooter();
+        renderFloatingCartBar();
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function renderHeaderAndBanner() {
+        const s = state.data.settings;
+        document.title = `${s.name} - ${s.subtitle || 'المنيو الإلكتروني'}`;
+        document.getElementById("headerStoreName").textContent = s.name;
+        document.getElementById("headerStoreSub").textContent = s.subtitle || '';
+        document.getElementById("heroTitle").textContent = `${s.name}${s.subtitle ? ' - ' + s.subtitle : ''}`;
+        document.getElementById("storeAddressText").textContent = s.address;
+        document.getElementById("headerCallBtn").href = `tel:${s.phone1}`;
+
+        const logoWrap = document.getElementById("headerLogoWrap");
+        const cleanLogo = formatDirectImageUrl(s.logoUrl);
+        if (cleanLogo) {
+          logoWrap.innerHTML = `<img src="${sanitize(cleanLogo)}" alt="شعار" onerror="this.onerror=null;this.parentElement.innerHTML='<span class=\\'font-black text-[#0b74b8] text-xs\\'>EID</span>'" class="w-full h-full object-cover rounded-lg" />`;
+        } else {
+          logoWrap.innerHTML = `
+            <svg viewBox="0 0 64 64" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <rect width="64" height="64" rx="14" fill="#0b74b8"/>
+              <text x="32" y="34" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="900" font-family="Cairo,sans-serif">EID</text>
+              <text x="32" y="51" text-anchor="middle" fill="#fef3c7" font-size="10" font-weight="700" font-family="Cairo,sans-serif">SEA FOOD</text>
+            </svg>`;
+        }
+
+        const bannerImg = document.getElementById("bannerImg");
+        const bannerFallback = document.getElementById("bannerFallback");
+        const cleanBanner = formatDirectImageUrl(s.bannerUrl);
+        if (cleanBanner) {
+          bannerImg.src = cleanBanner;
+          bannerImg.classList.remove("hidden");
+          bannerFallback.classList.add("hidden");
+        } else {
+          bannerImg.classList.add("hidden");
+          bannerFallback.classList.remove("hidden");
+        }
+
+        const open = isStoreOpen();
+        const badge = document.getElementById("workStatusBadge");
+        badge.className = open
+          ? "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200"
+          : "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-50 text-rose-700 border border-rose-200";
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full ${open ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}"></span> ${open ? 'مفتوح الآن لاستقبال الطلبات' : 'مغلق حالياً'}`;
+
+        document.querySelector("#workHoursText span").textContent = `${formatTime12(s.openTime)} - ${formatTime12(s.closeTime)}`;
+      }
+
+      function renderCategoryTabs() {
+        const cats = ["🔥 العروض", "الكل", ...state.data.categories.filter(c => c !== "🔥 العروض")];
+        const wrap = document.getElementById("categoryTabs");
+        wrap.innerHTML = cats.map(cat => {
+          const active = state.activeCategory === cat;
+          const isOfferTab = cat === "🔥 العروض";
+          return `
+            <button type="button" onclick="window.selectCategory('${sanitize(cat)}')"
+                    class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-extrabold transition border ${
+                      active
+                        ? (isOfferTab ? 'bg-gradient-to-l from-[#d97706] to-amber-500 text-white border-[#d97706] shadow-sm' : 'bg-[#0b74b8] text-white border-[#0b74b8] shadow-sm')
+                        : (isOfferTab ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100' : 'bg-white text-navy border-[#e2d5c3] hover:border-[#0b74b8]/50')
+                    }">
+              ${sanitize(cat)}
+            </button>`;
+        }).join("");
+      }
+
+      function getPriceDisplay(item) {
+        if (item.options && item.options.length > 0) {
+          const prices = item.options.map(o => Number(o.price)).filter(p => p > 0);
+          if (prices.length > 0) {
+            const min = Math.min(...prices);
+            const max = Math.max(...prices);
+            return min === max
+              ? `<span class="text-sm font-black text-[#0b74b8]">${min} ج.م</span>`
+              : `<span class="text-sm font-black text-[#0b74b8]">${min} - ${max} ج.م</span>`;
+          }
+        }
+        if (Number(item.price) > 0) {
+          return `<span class="text-sm font-black text-[#0b74b8]">${item.price} ج.م</span>`;
+        }
+        const label = item.priceLabel || "سعر اليوم";
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-amber-100 text-amber-800 border border-amber-300 text-xs font-extrabold">${sanitize(label)}</span>`;
+      }
+
+      function renderMenu() {
+        const container = document.getElementById("menuContainer");
+        const q = state.searchQuery.trim().toLowerCase();
+        const viewOnly = Boolean(state.data.settings.viewOnlyMode);
+
+        let filtered = state.data.items.filter(item => item.available !== false);
+        if (state.activeCategory !== "الكل" && !q) {
+          filtered = filtered.filter(item => item.category === state.activeCategory);
+        }
+        if (q) {
+          filtered = filtered.filter(item =>
+            item.name.toLowerCase().includes(q) ||
+            (item.desc && item.desc.toLowerCase().includes(q)) ||
+            item.category.toLowerCase().includes(q)
+          );
+        }
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="bg-white rounded-2xl border border-[#e2d5c3] p-8 text-center">
+              <p class="text-sm font-bold text-slate-500">لا توجد أصناف مطابقة لبحثك حالياً.</p>
+              <button type="button" onclick="window.clearSearch(); window.selectCategory('الكل');"
+                      class="mt-3 px-4 py-2 rounded-xl bg-[#0b74b8] text-white text-xs font-bold">عرض كل المنيو</button>
+            </div>`;
+          return;
+        }
+
+        const groups = {};
+        if (state.activeCategory === "الكل" || q) {
+          state.data.categories.forEach(c => { groups[c] = []; });
+          filtered.forEach(item => {
+            if (!groups[item.category]) groups[item.category] = [];
+            groups[item.category].push(item);
+          });
+        } else {
+          groups[state.activeCategory] = filtered;
+        }
+
+        let html = "";
+        Object.keys(groups).forEach(cat => {
+          const list = groups[cat];
+          if (!list || list.length === 0) return;
+          const isOfferCat = cat === "🔥 العروض";
+
+          html += `
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-6 rounded-full ${isOfferCat ? 'bg-[#d97706]' : 'bg-[#0b74b8]'}"></span>
+                  <h2 class="text-base font-black ${isOfferCat ? 'text-amber-800' : 'text-navy'}">${sanitize(cat)}</h2>
+                </div>
+                <span class="text-[11px] font-bold ${isOfferCat ? 'text-amber-800 bg-amber-100 border-amber-300' : 'text-slate-500 bg-white border-[#e2d5c3]'} px-2.5 py-0.5 rounded-full border">${list.length} ${isOfferCat ? 'عرض' : 'صنف'}</span>
+              </div>
+              <div class="space-y-2.5">
+                ${list.map(item => renderItemCard(item, viewOnly)).join("")}
+              </div>
+            </div>`;
+        });
+
+        container.innerHTML = html;
+      }
+
+      function renderItemCard(item, viewOnly) {
+        const imgUrl = formatDirectImageUrl(item.image);
+        const hasOpts = item.options && item.options.length > 0;
+        const cartQty = state.cart.filter(c => c.itemId === item.id).reduce((s, c) => s + c.qty, 0);
+        const isOffer = item.isOffer || item.category === "🔥 العروض";
+
+        return `
+          <div onclick="${viewOnly ? '' : `window.openItemModal(${item.id})`}"
+               class="${isOffer ? 'bg-gradient-to-br from-white via-amber-50/40 to-amber-100/30 border-2 border-amber-400/80 shadow-sm' : 'bg-white border border-[#e2d5c3] shadow-xs'} rounded-2xl p-3 hover:shadow-md hover:border-[#0b74b8]/40 transition flex items-stretch gap-3 ${viewOnly ? '' : 'cursor-pointer active:scale-[0.99]'} relative">
+            ${imgUrl ? `
+              <div class="w-20 h-20 rounded-xl overflow-hidden bg-[#f5efe6] shrink-0 border border-[#e2d5c3]/60">
+                <img src="${sanitize(imgUrl)}" alt="${sanitize(item.name)}"
+                     onerror="this.onerror=null;this.src='https://placehold.co/160x160/0b74b8/ffffff?text=EID';"
+                     class="w-full h-full object-cover" loading="lazy" />
+              </div>` : ''}
+            <div class="flex-1 min-w-0 flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    ${isOffer ? `<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-gradient-to-l from-[#d97706] to-amber-500 text-white text-[10px] font-black shadow-2xs">🔥 عرض خاص</span>` : ''}
+                    <h3 class="text-sm font-extrabold text-navy leading-snug">${sanitize(item.name)}</h3>
+                  </div>
+                  ${cartQty > 0 && !viewOnly ? `<span class="shrink-0 px-2 py-0.5 rounded-full bg-[#0b74b8] text-white text-[10px] font-black">${cartQty} في السلة</span>` : ''}
+                </div>
+                ${item.desc ? `<p class="text-[11px] text-slate-600 mt-1 leading-relaxed line-clamp-2">${sanitize(item.desc)}</p>` : ''}
+                ${hasOpts ? `
+                  <div class="flex flex-wrap gap-1 mt-1.5">
+                    ${item.options.map(o => `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${isOffer ? 'bg-amber-100/80 text-amber-900 border-amber-300' : 'bg-[#f5efe6] text-[#084c7a] border-[#e2d5c3]'} border">${sanitize(o.name)}</span>`).join("")}
+                  </div>` : ''}
+              </div>
+              <div class="flex items-center justify-between mt-2.5 pt-2 ${isOffer ? 'border-t border-amber-200/70' : 'border-t border-[#f5efe6]'}">
+                <div>${getPriceDisplay(item)}</div>
+                ${!viewOnly ? `
+                  <button type="button" onclick="event.stopPropagation(); window.openItemModal(${item.id})"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl ${isOffer ? 'bg-[#d97706] hover:bg-amber-700' : 'bg-[#0b74b8] hover:bg-[#084c7a]'} text-white text-xs font-extrabold transition shadow-xs">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    <span>${hasOpts ? 'اختر' : (isOffer ? 'اطلب العرض' : 'أضف')}</span>
+                  </button>` : ''}
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function renderFooter() {
+        const s = state.data.settings;
+        document.getElementById("footerStoreName").textContent = `${s.name}${s.subtitle ? ' - ' + s.subtitle : ''}`;
+        document.getElementById("footerAddress").textContent = s.address;
+        const p1 = document.getElementById("footerPhone1");
+        const p2 = document.getElementById("footerPhone2");
+        p1.href = `tel:${s.phone1}`;
+        p1.querySelector("span").textContent = s.phone1;
+        if (s.phone2) {
+          p2.classList.remove("hidden");
+          p2.href = `tel:${s.phone2}`;
+          p2.querySelector("span").textContent = s.phone2;
+        } else {
+          p2.classList.add("hidden");
+        }
+
+        const links = [];
+        if (s.mapsUrl) links.push({ url: s.mapsUrl, label: "الموقع على الخريطة", icon: "map-pin" });
+        if (s.facebookUrl) links.push({ url: s.facebookUrl, label: "فيسبوك", icon: "facebook" });
+        if (s.instagramUrl) links.push({ url: s.instagramUrl, label: "إنستجرام", icon: "instagram" });
+        if (s.tiktokUrl) links.push({ url: s.tiktokUrl, label: "تيك توك", icon: "video" });
+
+        const socialWrap = document.getElementById("footerSocialLinks");
+        socialWrap.innerHTML = links.map(l => `
+          <a href="${sanitize(l.url)}" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold transition">
+            <i data-lucide="${l.icon}" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>${l.label}</span>
+          </a>`).join("");
+      }
+
+      function getCartTotals() {
+        let subtotal = 0;
+        let hasVariableItems = false;
+        state.cart.forEach(entry => {
+          const linePrice = (Number(entry.unitPrice) + Number(entry.addonsTotal || 0)) * entry.qty;
+          subtotal += linePrice;
+          if (Number(entry.unitPrice) === 0) hasVariableItems = true;
+        });
+
+        let discount = 0;
+        if (state.data.settings.couponsEnabled && state.appliedCoupon && subtotal > 0) {
+          if (state.appliedCoupon.type === "percent") {
+            discount = Math.round((subtotal * state.appliedCoupon.value) / 100);
+          } else {
+            discount = Math.min(subtotal, Number(state.appliedCoupon.value));
+          }
+        }
+
+        let deliveryFee = 0;
+        if (state.orderMode === "delivery") {
+          const zone = state.data.deliveryZones.find(z => Number(z.id) === Number(state.selectedZoneId)) || state.data.deliveryZones[0];
+          deliveryFee = zone ? Number(zone.fee) : 0;
+        }
+
+        const total = Math.max(0, subtotal - discount + deliveryFee);
+        const totalQty = state.cart.reduce((s, c) => s + c.qty, 0);
+        return { subtotal, discount, deliveryFee, total, totalQty, hasVariableItems };
+      }
+
+      function renderFloatingCartBar() {
+        const bar = document.getElementById("floatingCartBar");
+        const viewOnly = Boolean(state.data.settings.viewOnlyMode);
+        const { total, totalQty, hasVariableItems } = getCartTotals();
+
+        if (viewOnly || totalQty === 0) {
+          bar.classList.add("hidden");
+          return;
+        }
+        bar.classList.remove("hidden");
+        document.getElementById("cartCountBadge").textContent = totalQty;
+        document.getElementById("cartTotalBar").textContent = `${total} ج.م${hasVariableItems ? ' + وزن' : ''}`;
+        document.getElementById("cartBarSubtext").textContent = hasVariableItems ? "يشمل أصناف تُسعّر حسب الوزن/اليوم" : "اضغط لمراجعة الطلب وإرساله";
+      }
+
+      window.selectCategory = function (cat) {
+        state.activeCategory = cat;
+        renderCategoryTabs();
+        renderMenu();
+      };
+
+      window.handleSearch = function (val) {
+        state.searchQuery = val;
+        const btn = document.getElementById("clearSearchBtn");
+        if (val && val.trim()) btn.classList.remove("hidden");
+        else btn.classList.add("hidden");
+        renderMenu();
+      };
+
+      window.clearSearch = function () {
+        state.searchQuery = "";
+        const inp = document.getElementById("searchInput");
+        if (inp) inp.value = "";
+        document.getElementById("clearSearchBtn").classList.add("hidden");
+        renderMenu();
+      };
+
+      window.shareMenu = async function () {
+        const s = state.data.settings;
+        const shareData = { title: `${s.name} - المنيو الإلكتروني`, text: `تصفح منيو ${s.name} واطلب أونلاين الآن!`, url: window.location.href };
+        if (navigator.share) {
+          try { await navigator.share(shareData); return; } catch (e) { /* fallback */ }
+        }
+        try {
+          const ta = document.createElement("textarea");
+          ta.value = window.location.href;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          showToast("تم نسخ رابط المنيو للمشاركة!", "success");
+        } catch (e) {
+          showToast("تعذر نسخ الرابط تلقائياً", "error");
+        }
+      };
+
+      window.closeModal = function () {
+        const mc = document.getElementById("modalContainer");
+        if (mc) mc.innerHTML = "";
+      };
+
+      let modalItemState = { item: null, optionIdx: 0, addonIds: [], qty: 1, note: "" };
+
+      window.openItemModal = function (itemId) {
+        if (state.data.settings.viewOnlyMode) return;
+        const item = state.data.items.find(i => Number(i.id) === Number(itemId));
+        if (!item) return;
+
+        modalItemState = { item, optionIdx: 0, addonIds: [], qty: 1, note: "" };
+        renderItemModal();
+      };
+
+      function renderItemModal() {
+        const { item, optionIdx, addonIds, qty, note } = modalItemState;
+        const hasOpts = item.options && item.options.length > 0;
+        const basePrice = hasOpts ? Number(item.options[optionIdx].price) : Number(item.price);
+        const addonsTotal = addonIds.reduce((sum, id) => {
+          const a = state.data.addons.find(x => Number(x.id) === Number(id));
+          return sum + (a ? Number(a.price) : 0);
+        }, 0);
+        const lineTotal = (basePrice + addonsTotal) * qty;
+        const imgUrl = formatDirectImageUrl(item.image);
+
+        const mc = document.getElementById("modalContainer");
+        mc.innerHTML = `
+          <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4" onclick="if(event.target===this) window.closeModal()">
+            <div class="bg-white w-full max-w-[480px] max-h-[90vh] rounded-t-3xl sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-slide-up">
+              <div class="px-4 py-3.5 bg-[#0b74b8] text-white flex items-center justify-between shrink-0">
+                <h3 class="font-black text-base truncate">${sanitize(item.name)}</h3>
+                <button type="button" onclick="window.closeModal()" class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <div class="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
+                ${imgUrl ? `<img src="${sanitize(imgUrl)}" alt="${sanitize(item.name)}" class="w-full h-44 object-cover rounded-2xl border border-[#e2d5c3]" />` : ''}
+                ${item.desc ? `<p class="text-xs text-slate-600 leading-relaxed bg-[#f5efe6] p-3 rounded-xl border border-[#e2d5c3]">${sanitize(item.desc)}</p>` : ''}
+
+                ${basePrice === 0 ? `
+                  <div class="p-3 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="scale" class="w-4 h-4 text-[#d97706] shrink-0"></i>
+                    <span>هذا الصنف يُسعّر (${sanitize(item.priceLabel || 'سعر اليوم')})، وسيتم تأكيد الوزن والسعر النهائي معك هاتفياً أو عبر واتساب.</span>
+                  </div>` : ''}
+
+                ${hasOpts ? `
+                  <div>
+                    <label class="block text-xs font-black text-navy mb-2">اختر الحجم / طريقة التسوية:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                      ${item.options.map((opt, idx) => `
+                        <button type="button" onclick="window.setModalOption(${idx})"
+                                class="p-2.5 rounded-xl border text-right transition flex items-center justify-between ${
+                                  optionIdx === idx
+                                    ? 'border-[#0b74b8] bg-[#e6f3fb] text-[#084c7a] font-black'
+                                    : 'border-[#e2d5c3] bg-white text-navy font-bold'
+                                }">
+                          <span class="text-xs">${sanitize(opt.name)}</span>
+                          <span class="text-xs text-[#0b74b8]">${Number(opt.price) > 0 ? opt.price + ' ج.م' : (item.priceLabel || 'سعر اليوم')}</span>
+                        </button>`).join("")}
+                    </div>
+                  </div>` : ''}
+
+                ${state.data.addons.length > 0 ? `
+                  <div>
+                    <label class="block text-xs font-black text-navy mb-2">إضافات جانبية (اختياري):</label>
+                    <div class="space-y-1.5">
+                      ${state.data.addons.map(ad => {
+                        const checked = addonIds.includes(ad.id);
+                        return `
+                          <button type="button" onclick="window.toggleModalAddon(${ad.id})"
+                                  class="w-full p-2.5 rounded-xl border flex items-center justify-between text-xs transition ${
+                                    checked ? 'border-[#0b74b8] bg-[#e6f3fb] font-extrabold' : 'border-[#e2d5c3] bg-white font-semibold'
+                                  }">
+                            <span class="flex items-center gap-2">
+                              <span class="w-4 h-4 rounded flex items-center justify-center ${checked ? 'bg-[#0b74b8] text-white' : 'border border-slate-300'}">
+                                ${checked ? '✓' : ''}
+                              </span>
+                              <span>${sanitize(ad.name)}</span>
+                            </span>
+                            <span class="text-[#0b74b8] font-bold">+${ad.price} ج.م</span>
+                          </button>`;
+                      }).join("")}
+                    </div>
+                  </div>` : ''}
+
+                <div>
+                  <label class="block text-xs font-black text-navy mb-1.5">ملاحظات خاصة (مثل: وزن معين، بدون شطة...):</label>
+                  <input type="text" value="${sanitize(note)}" oninput="window.setModalNote(this.value)" placeholder="اكتب ملاحظاتك هنا..."
+                         class="w-full border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-[#0b74b8]" />
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-[#f5efe6] border-t border-[#e2d5c3] flex items-center gap-3 shrink-0">
+                <div class="flex items-center bg-white border border-[#e2d5c3] rounded-xl p-1">
+                  <button type="button" onclick="window.changeModalQty(-1)" class="w-8 h-8 rounded-lg bg-[#f5efe6] text-navy font-black flex items-center justify-center">-</button>
+                  <span class="w-8 text-center font-black text-sm">${qty}</span>
+                  <button type="button" onclick="window.changeModalQty(1)" class="w-8 h-8 rounded-lg bg-[#0b74b8] text-white font-black flex items-center justify-center">+</button>
+                </div>
+                <button type="button" onclick="window.confirmAddToCart()"
+                        class="flex-1 bg-[#0b74b8] hover:bg-[#084c7a] text-white font-black text-xs py-3 px-4 rounded-xl shadow flex items-center justify-between">
+                  <span>إضافة للسلة</span>
+                  <span>${basePrice === 0 && addonsTotal === 0 ? sanitize(item.priceLabel || 'سعر اليوم') : lineTotal + ' ج.م'}</span>
+                </button>
+              </div>
+            </div>
+          </div>`;
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      window.setModalOption = function (idx) { modalItemState.optionIdx = idx; renderItemModal(); };
+      window.toggleModalAddon = function (id) {
+        const idx = modalItemState.addonIds.indexOf(id);
+        if (idx > -1) modalItemState.addonIds.splice(idx, 1);
+        else modalItemState.addonIds.push(id);
+        renderItemModal();
+      };
+      window.setModalNote = function (val) { modalItemState.note = val; };
+      window.changeModalQty = function (delta) {
+        modalItemState.qty = Math.max(1, modalItemState.qty + delta);
+        renderItemModal();
+      };
+
+      window.confirmAddToCart = function () {
+        const { item, optionIdx, addonIds, qty, note } = modalItemState;
+        const hasOpts = item.options && item.options.length > 0;
+        const chosenOpt = hasOpts ? item.options[optionIdx] : null;
+        const unitPrice = chosenOpt ? Number(chosenOpt.price) : Number(item.price);
+        const chosenAddons = addonIds.map(id => state.data.addons.find(a => Number(a.id) === Number(id))).filter(Boolean);
+        const addonsTotal = chosenAddons.reduce((s, a) => s + Number(a.price), 0);
+
+        state.cart.push({
+          uid: Date.now() + Math.random(),
+          itemId: item.id,
+          name: item.name,
+          optionName: chosenOpt ? chosenOpt.name : "",
+          unitPrice,
+          priceLabel: item.priceLabel || "",
+          addons: chosenAddons,
+          addonsTotal,
+          qty,
+          note: note.trim()
+        });
+
+        saveCart();
+        window.closeModal();
+        renderMenu();
+        renderFloatingCartBar();
+        showToast(`تمت إضافة "${item.name}" إلى السلة`, "success");
+      };
+
+      let checkoutForm = { name: "", phone: "", address: "", tableNum: "", couponInput: "" };
+
+      window.openCartModal = function () {
+        const mc = document.getElementById("modalContainer");
+        const { subtotal, discount, deliveryFee, total, hasVariableItems } = getCartTotals();
+        const s = state.data.settings;
+
+        mc.innerHTML = `
+          <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4" onclick="if(event.target===this) window.closeModal()">
+            <div class="bg-white w-full max-w-[480px] max-h-[92vh] rounded-t-3xl sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-slide-up">
+              <div class="px-4 py-3.5 bg-[#0b74b8] text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="shopping-bag" class="w-5 h-5 text-amber-300"></i>
+                  <h3 class="font-black text-base">سلة الطلبات وإتمام الطلب</h3>
+                </div>
+                <button type="button" onclick="window.closeModal()" class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <div class="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
+                ${state.cart.length === 0 ? `
+                  <div class="text-center py-10">
+                    <p class="text-sm font-bold text-slate-500">سلة الطلبات فارغة حالياً</p>
+                  </div>` : `
+                  <div class="space-y-2">
+                    ${state.cart.map((c, idx) => `
+                      <div class="p-3 rounded-2xl bg-[#faf6f0] border border-[#e2d5c3] flex items-start justify-between gap-2">
+                        <div class="min-w-0 flex-1">
+                          <p class="text-xs font-black text-navy">${sanitize(c.name)} ${c.optionName ? `<span class="text-[#0b74b8]">(${sanitize(c.optionName)})</span>` : ''}</p>
+                          ${c.addons.length ? `<p class="text-[11px] text-slate-500 mt-0.5">+ ${c.addons.map(a => sanitize(a.name)).join('، ')}</p>` : ''}
+                          ${c.note ? `<p class="text-[11px] text-amber-700 mt-0.5">ملاحظة: ${sanitize(c.note)}</p>` : ''}
+                          <p class="text-xs font-extrabold text-[#0b74b8] mt-1">
+                            ${Number(c.unitPrice) === 0 ? sanitize(c.priceLabel || 'سعر اليوم') : ((Number(c.unitPrice) + Number(c.addonsTotal)) * c.qty) + ' ج.م'}
+                          </p>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                          <button type="button" onclick="window.updateCartQty(${idx}, -1)" class="w-7 h-7 rounded-lg bg-white border border-[#e2d5c3] font-black text-xs">-</button>
+                          <span class="w-5 text-center font-black text-xs">${c.qty}</span>
+                          <button type="button" onclick="window.updateCartQty(${idx}, 1)" class="w-7 h-7 rounded-lg bg-[#0b74b8] text-white font-black text-xs">+</button>
+                        </div>
+                      </div>`).join("")}
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-black text-navy mb-2">طريقة الاستلام:</label>
+                    <div class="grid grid-cols-3 gap-2">
+                      ${[
+                        { id: 'delivery', label: 'توصيل دليفري', icon: 'bike' },
+                        { id: 'takeaway', label: 'تيك أواي', icon: 'package' },
+                        { id: 'dinein', label: 'صالة (طاولة)', icon: 'utensils' }
+                      ].map(m => `
+                        <button type="button" onclick="window.setOrderMode('${m.id}')"
+                                class="p-2.5 rounded-xl border flex flex-col items-center gap-1 text-center transition ${
+                                  state.orderMode === m.id
+                                    ? 'border-[#0b74b8] bg-[#e6f3fb] text-[#084c7a] font-black'
+                                    : 'border-[#e2d5c3] bg-white text-slate-600 font-bold'
+                                }">
+                          <i data-lucide="${m.icon}" class="w-4 h-4"></i>
+                          <span class="text-[11px]">${m.label}</span>
+                        </button>`).join("")}
+                    </div>
+                  </div>
+
+                  <div class="space-y-2.5 bg-[#f5efe6]/70 p-3 rounded-2xl border border-[#e2d5c3]">
+                    ${state.orderMode === 'dinein' ? `
+                      <div>
+                        <label class="block text-xs font-bold text-navy mb-1">رقم الطاولة *</label>
+                        <input type="text" value="${sanitize(checkoutForm.tableNum)}" oninput="window.updateCheckoutField('tableNum', this.value)" placeholder="مثال: طاولة 5"
+                               class="w-full bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold" />
+                      </div>` : `
+                      <div class="grid grid-cols-2 gap-2">
+                        <div>
+                          <label class="block text-xs font-bold text-navy mb-1">الاسم *</label>
+                          <input type="text" value="${sanitize(checkoutForm.name)}" oninput="window.updateCheckoutField('name', this.value)" placeholder="اسم العميل"
+                                 class="w-full bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold" />
+                        </div>
+                        <div>
+                          <label class="block text-xs font-bold text-navy mb-1">رقم الموبايل *</label>
+                          <input type="tel" value="${sanitize(checkoutForm.phone)}" oninput="window.updateCheckoutField('phone', this.value)" placeholder="01xxxxxxxxx"
+                                 class="w-full bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold" />
+                        </div>
+                      </div>`}
+
+                    ${state.orderMode === 'delivery' ? `
+                      <div>
+                        <label class="block text-xs font-bold text-navy mb-1">منطقة التوصيل *</label>
+                        <select onchange="window.setDeliveryZone(this.value)" class="w-full bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold">
+                          ${state.data.deliveryZones.map(z => `<option value="${z.id}" ${Number(state.selectedZoneId) === Number(z.id) ? 'selected' : ''}>${sanitize(z.name)} (${z.fee} ج.م)</option>`).join("")}
+                        </select>
+                      </div>
+                      <div>
+                        <div class="flex items-center justify-between mb-1">
+                          <label class="text-xs font-bold text-navy">العنوان بالتفصيل *</label>
+                          <button type="button" onclick="window.detectGPS()" class="text-[11px] font-extrabold text-[#0b74b8] flex items-center gap-1">
+                            <i data-lucide="locate-fixed" class="w-3.5 h-3.5"></i> ${state.gpsCoords ? 'تم تحديد GPS ✓' : 'تحديد موقعي GPS'}
+                          </button>
+                        </div>
+                        <input type="text" value="${sanitize(checkoutForm.address)}" oninput="window.updateCheckoutField('address', this.value)" placeholder="الشارع، رقم العمارة، الدور، علامة مميزة..."
+                               class="w-full bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold" />
+                      </div>` : ''}
+                  </div>
+
+                  ${s.couponsEnabled ? `
+                    <div>
+                      <label class="block text-xs font-black text-navy mb-1.5">كود الخصم:</label>
+                      <div class="flex gap-2">
+                        <input type="text" value="${sanitize(checkoutForm.couponInput)}" oninput="window.updateCheckoutField('couponInput', this.value)" placeholder="أدخل الكوبون (مثل WELCOME10)"
+                               class="flex-1 bg-white border border-[#e2d5c3] rounded-xl px-3 py-2 text-xs font-bold uppercase" />
+                        <button type="button" onclick="window.applyCouponCode()" class="px-4 py-2 rounded-xl bg-[#084c7a] text-white text-xs font-extrabold">تطبيق</button>
+                      </div>
+                      ${state.appliedCoupon ? `<p class="text-[11px] text-emerald-700 font-bold mt-1">تم تطبيق الكوبون (${sanitize(state.appliedCoupon.code)}) بنجاح!</p>` : ''}
+                    </div>` : ''}
+
+                  <div>
+                    <label class="block text-xs font-black text-navy mb-1.5">طريقة الدفع:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                      <button type="button" onclick="window.setPaymentMethod('cash')"
+                              class="p-2.5 rounded-xl border text-xs font-extrabold ${state.paymentMethod === 'cash' ? 'border-[#0b74b8] bg-[#e6f3fb] text-[#084c7a]' : 'border-[#e2d5c3] bg-white'}">
+                        💵 كاش عند الاستلام
+                      </button>
+                      <button type="button" onclick="window.setPaymentMethod('instapay')"
+                              class="p-2.5 rounded-xl border text-xs font-extrabold ${state.paymentMethod === 'instapay' ? 'border-[#0b74b8] bg-[#e6f3fb] text-[#084c7a]' : 'border-[#e2d5c3] bg-white'}">
+                        📱 إنستاباي InstaPay
+                      </button>
+                    </div>
+                    ${state.paymentMethod === 'instapay' && s.instapayInfo ? `
+                      <p class="mt-1.5 text-[11px] font-bold text-[#084c7a] bg-[#e6f3fb] p-2 rounded-xl border border-[#0b74b8]/30">
+                        بيانات التحويل إنستاباي: <span class="font-black">${sanitize(s.instapayInfo)}</span>
+                      </p>` : ''}
+                  </div>
+
+                  <div class="bg-[#0f2942] text-white rounded-2xl p-3.5 space-y-1.5 text-xs">
+                    <div class="flex justify-between text-sky-100"><span>المجموع الفرعي:</span><span>${subtotal} ج.م</span></div>
+                    ${discount > 0 ? `<div class="flex justify-between text-emerald-300 font-bold"><span>الخصم:</span><span>-${discount} ج.م</span></div>` : ''}
+                    <div class="flex justify-between text-sky-100"><span>رسوم التوصيل:</span><span>${deliveryFee} ج.م</span></div>
+                    <div class="flex justify-between text-base font-black text-amber-300 pt-1.5 border-t border-white/15">
+                      <span>الإجمالي النهائي:</span>
+                      <span>${total} ج.م${hasVariableItems ? ' + أصناف بالوزن' : ''}</span>
+                    </div>
+                  </div>
+                `}
+              </div>
+
+              ${state.cart.length > 0 ? `
+                <div class="p-3.5 bg-[#f5efe6] border-t border-[#e2d5c3] shrink-0">
+                  <button type="button" onclick="window.submitWhatsAppOrder()"
+                          class="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span>إرسال الطلب عبر واتساب الآن</span>
+                  </button>
+                </div>` : ''}
+            </div>
+          </div>`;
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.updateCartQty = function (idx, delta) {
+        if (!state.cart[idx]) return;
+        state.cart[idx].qty += delta;
+        if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+        saveCart();
+        renderMenu();
+        renderFloatingCartBar();
+        window.openCartModal();
+      };
+
+      window.setOrderMode = function (mode) { state.orderMode = mode; window.openCartModal(); };
+      window.setDeliveryZone = function (id) { state.selectedZoneId = Number(id); window.openCartModal(); };
+      window.setPaymentMethod = function (m) { state.paymentMethod = m; window.openCartModal(); };
+      window.updateCheckoutField = function (k, v) { checkoutForm[k] = v; };
+
+      window.applyCouponCode = function () {
+        const code = normalizeArabicInput(checkoutForm.couponInput).toUpperCase();
+        const found = state.data.coupons.find(c => c.active && c.code.toUpperCase() === code);
+        if (!found) {
+          state.appliedCoupon = null;
+          showToast("كود الخصم غير صحيح أو غير مفعل", "error");
+        } else {
+          state.appliedCoupon = found;
+          showToast("تم تفعيل كود الخصم بنجاح!", "success");
+        }
+        window.openCartModal();
+      };
+
+      window.detectGPS = function () {
+        if (!navigator.geolocation) {
+          showToast("المتصفح لا يدعم تحديد الموقع الجغرافي", "error");
+          return;
+        }
+        showToast("جاري تحديد موقعك...");
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            state.gpsCoords = `https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
+            showToast("تم إرفاق رابط موقعك GPS بنجاح!", "success");
+            window.openCartModal();
+          },
+          () => showToast("تعذر الحصول على الموقع، يرجى كتابة العنوان يدوياً", "error"),
+          { timeout: 8000 }
+        );
+      };
+
+      window.submitWhatsAppOrder = function () {
+        const mode = state.orderMode;
+        if (mode === "dinein" && !checkoutForm.tableNum.trim()) {
+          showToast("يرجى إدخال رقم الطاولة أولاً", "error");
+          return;
+        }
+        if (mode !== "dinein" && (!checkoutForm.name.trim() || !checkoutForm.phone.trim())) {
+          showToast("يرجى إدخال الاسم ورقم الموبايل", "error");
+          return;
+        }
+        if (mode === "delivery" && !checkoutForm.address.trim()) {
+          showToast("يرجى إدخال عنوان التوصيل بالتفصيل", "error");
+          return;
+        }
+
+        const s = state.data.settings;
+        const { subtotal, discount, deliveryFee, total, hasVariableItems } = getCartTotals();
+        const modeLabels = { delivery: "توصيل دليفري 🛵", takeaway: "تيك أواي 🛍️", dinein: "صالة بالمطعم 🍽️" };
+
+        let lines = [];
+        lines.push(`*طلب جديد من منيو ${s.name}* 🐟`);
+        lines.push(`━━━━━━━━━━━━━━━━`);
+        lines.push(`*نوع الطلب:* ${modeLabels[mode]}`);
+
+        if (mode === "dinein") {
+          lines.push(`*رقم الطاولة:* ${checkoutForm.tableNum.trim()}`);
+        } else {
+          lines.push(`*الاسم:* ${checkoutForm.name.trim()}`);
+          lines.push(`*الموبايل:* ${normalizeArabicInput(checkoutForm.phone)}`);
+        }
+
+        if (mode === "delivery") {
+          const zone = state.data.deliveryZones.find(z => Number(z.id) === Number(state.selectedZoneId));
+          if (zone) lines.push(`*المنطقة:* ${zone.name} (${zone.fee} ج.م)`);
+          lines.push(`*العنوان:* ${checkoutForm.address.trim()}`);
+          if (state.gpsCoords) lines.push(`*الموقع GPS:* ${state.gpsCoords}`);
+        }
+
+        lines.push(`━━━━━━━━━━━━━━━━`);
+        lines.push(`*الأصناف المطلوبة:*`);
+        state.cart.forEach((c, idx) => {
+          const unit = Number(c.unitPrice);
+          const priceStr = unit === 0 ? `(${c.priceLabel || 'سعر اليوم'})` : `${(unit + Number(c.addonsTotal)) * c.qty} ج.م`;
+          lines.push(`${idx + 1}. *${c.name}*${c.optionName ? ' [' + c.optionName + ']' : ''} × ${c.qty} — ${priceStr}`);
+          if (c.addons.length) lines.push(`   + إضافات: ${c.addons.map(a => a.name).join('، ')}`);
+          if (c.note) lines.push(`   📝 ملاحظة: ${c.note}`);
+        });
+
+        lines.push(`━━━━━━━━━━━━━━━━`);
+        lines.push(`*المجموع الفرعي:* ${subtotal} ج.م`);
+        if (discount > 0) lines.push(`*الخصم (${state.appliedCoupon.code}):* -${discount} ج.م`);
+        if (mode === "delivery") lines.push(`*التوصيل:* ${deliveryFee} ج.م`);
+        lines.push(`*الإجمالي:* ${total} ج.م${hasVariableItems ? ' (+ أصناف تُسعّر حسب الوزن/اليوم)' : ''}`);
+        lines.push(`*طريقة الدفع:* ${state.paymentMethod === 'instapay' ? 'إنستاباي InstaPay' : 'كاش عند الاستلام'}`);
+
+        const waPhone = normalizeArabicInput(s.whatsapp).replace(/[^0-9]/g, '');
+        const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(lines.join('\n'))}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      };
+
+      function getSavedPassHash() {
+        return localStorage.getItem(STORAGE_KEYS.PASS) || DEFAULT_PASS_HASH;
+      }
+
+      window.openAdminAuth = function () {
+        if (state.adminUnlocked) {
+          window.openAdminPanel();
+          return;
+        }
+        const mc = document.getElementById("modalContainer");
+        mc.innerHTML = `
+          <div class="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs flex items-center justify-center p-4" onclick="if(event.target===this) window.closeModal()">
+            <div class="bg-white w-full max-w-[380px] rounded-3xl p-5 shadow-2xl animate-slide-up space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-black text-base text-navy flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-5 h-5 text-[#0b74b8]"></i>
+                  <span>دخول إدارة المنيو</span>
+                </h3>
+                <button type="button" onclick="window.closeModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+              <p class="text-xs text-slate-500">أدخل كلمة مرور المالك لإدارة الأصناف والأسعار والمزامنة:</p>
+              <input id="adminPassInput" type="password" onkeydown="if(event.key==='Enter') window.verifyAdminPass()" placeholder="كلمة المرور"
+                     class="w-full border border-[#e2d5c3] rounded-xl px-3.5 py-2.5 text-sm font-bold focus:outline-none focus:border-[#0b74b8]" />
+              <button type="button" onclick="window.verifyAdminPass()"
+                      class="w-full py-3 rounded-xl bg-[#0b74b8] hover:bg-[#084c7a] text-white font-black text-xs">دخول لوحة التحكم</button>
+            </div>
+          </div>`;
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.verifyAdminPass = function () {
+        const inp = document.getElementById("adminPassInput");
+        const val = normalizeArabicInput(inp ? inp.value : "");
+        if (pureHash(val) === getSavedPassHash()) {
+          state.adminUnlocked = true;
+          window.openAdminPanel();
+        } else {
+          showToast("كلمة المرور غير صحيحة", "error");
+        }
+      };
+
+      window.openAdminPanel = function () {
+        const mc = document.getElementById("modalContainer");
+        const tabs = [
+          { id: "general", label: "الإعدادات والأصناف" },
+          { id: "delivery", label: "التوصيل" },
+          { id: "addons", label: "الإضافات" },
+          { id: "coupons", label: "الكوبونات" },
+          { id: "sync", label: "المزامنة والترخيص" }
+        ];
+
+        mc.innerHTML = `
+          <div class="fixed inset-0 z-50 bg-black/65 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+            <div class="bg-white w-full max-w-[480px] h-[92vh] sm:h-[86vh] rounded-t-3xl sm:rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-slide-up">
+              <div class="px-4 py-3 bg-[#084c7a] text-white flex items-center justify-between shrink-0">
+                <h3 class="font-black text-sm flex items-center gap-2">
+                  <i data-lucide="settings" class="w-4 h-4 text-amber-300"></i>
+                  <span>لوحة إدارة منيو ${sanitize(state.data.settings.name)}</span>
+                </h3>
+                <button type="button" onclick="window.closeModal(); renderApp();" class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-2 bg-[#f5efe6] border-b border-[#e2d5c3] shrink-0">
+                ${tabs.map(t => `
+                  <button type="button" onclick="window.switchAdminTab('${t.id}')"
+                          class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-extrabold transition ${
+                            state.adminTab === t.id ? 'bg-[#0b74b8] text-white shadow-xs' : 'bg-white text-navy border border-[#e2d5c3]'
+                          }">
+                    ${t.label}
+                  </button>`).join("")}
+              </div>
+
+              <div id="adminBody" class="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
+                ${renderAdminTabContent()}
+              </div>
+            </div>
+          </div>`;
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.switchAdminTab = function (tab) {
+        state.adminTab = tab;
+        state.editingItemId = null;
+        window.openAdminPanel();
+      };
+
+      function renderAdminTabContent() {
+        const s = state.data.settings;
+
+        if (state.adminTab === "general") {
+          const editItem = state.editingItemId ? state.data.items.find(i => Number(i.id) === Number(state.editingItemId)) : null;
+          return `
+            ${s.viewOnlyMode ? `
+              <div class="p-3 rounded-2xl bg-amber-50 border border-amber-300 flex items-center justify-between gap-2">
+                <span class="text-xs font-extrabold text-amber-900">أنت حالياً على باقة العرض الذكي</span>
+                <a href="https://wa.me/201000000000?text=${encodeURIComponent('مرحباً منظومة تك، أرغب في ترقية منيو ' + s.name + ' إلى نسخة Pro')}" target="_blank"
+                   class="px-3 py-1.5 rounded-xl bg-[#d97706] text-white text-xs font-black shrink-0">🔒 ترقية للواتساب</a>
+              </div>` : ''}
+
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">بيانات المطعم والغلاف</h4>
+              <div class="grid grid-cols-2 gap-2">
+                <input id="admName" value="${sanitize(s.name)}" placeholder="اسم المطعم" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admSub" value="${sanitize(s.subtitle)}" placeholder="الاسم الإنجليزي" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admWa" value="${sanitize(s.whatsapp)}" placeholder="واتساب الطلبات (201...)" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admP1" value="${sanitize(s.phone1)}" placeholder="هاتف 1" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admP2" value="${sanitize(s.phone2)}" placeholder="هاتف 2" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admInsta" value="${sanitize(s.instapayInfo)}" placeholder="حساب إنستاباي" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admOpen" type="time" value="${sanitize(s.openTime)}" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admClose" type="time" value="${sanitize(s.closeTime)}" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              </div>
+              <input id="admAddr" value="${sanitize(s.address)}" placeholder="العنوان" class="w-full border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              <div class="grid grid-cols-2 gap-2">
+                <input id="admMaps" value="${sanitize(s.mapsUrl)}" placeholder="رابط Google Maps" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="admFb" value="${sanitize(s.facebookUrl)}" placeholder="رابط فيسبوك" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              </div>
+              <div class="space-y-1.5">
+                <label class="block text-[11px] font-bold text-navy">صورة الغلاف (رابط أو رفع من الجهاز):</label>
+                <div class="flex gap-2">
+                  <input id="admBannerUrl" value="${sanitize(s.bannerUrl)}" placeholder="رابط صورة الغلاف" class="flex-1 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                  <label class="px-3 py-2 rounded-xl bg-[#084c7a] text-white text-xs font-bold cursor-pointer shrink-0">
+                    رفع صورة
+                    <input type="file" accept="image/*" class="hidden" onchange="window.uploadCompressedImage(this, 'banner')" />
+                  </label>
+                </div>
+              </div>
+              <button type="button" onclick="window.saveGeneralSettings()" class="w-full py-2.5 rounded-xl bg-[#0b74b8] text-white font-black text-xs">حفظ بيانات المطعم</button>
+            </div>
+
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">${editItem ? 'تعديل الصنف' : 'إضافة صنف / عرض جديد'}</h4>
+              <div class="grid grid-cols-2 gap-2">
+                <input id="itmName" value="${editItem ? sanitize(editItem.name) : ''}" placeholder="اسم الصنف *" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="itmCat" list="catOptions" value="${editItem ? sanitize(editItem.category) : '🔥 العروض'}" placeholder="القسم *" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <datalist id="catOptions">${state.data.categories.map(c => `<option value="${sanitize(c)}">`).join("")}</datalist>
+                <input id="itmPrice" type="number" value="${editItem ? editItem.price : ''}" placeholder="السعر (0 = سعر اليوم)" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="itmPriceLabel" value="${editItem ? sanitize(editItem.priceLabel || '') : ''}" placeholder="نص بديل (سعر اليوم/حسب الموازين)" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              </div>
+              <input id="itmDesc" value="${editItem ? sanitize(editItem.desc || '') : ''}" placeholder="وصف الصنف ومكوناته" class="w-full border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              <input id="itmOpts" value="${editItem && editItem.options ? sanitize(editItem.options.map(o => o.name + ':' + o.price).join(', ')) : ''}" placeholder="خيارات/أحجام (مثال: وسط:80, كبير:120)" class="w-full border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              <div class="flex gap-2">
+                <input id="itmImg" value="${editItem ? sanitize(editItem.image || '') : ''}" placeholder="رابط صورة الصنف" class="flex-1 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <label class="px-3 py-2 rounded-xl bg-[#084c7a] text-white text-xs font-bold cursor-pointer shrink-0">
+                  رفع
+                  <input type="file" accept="image/*" class="hidden" onchange="window.uploadCompressedImage(this, 'item')" />
+                </label>
+              </div>
+              <div class="flex gap-2">
+                <button type="button" onclick="window.saveMenuItem()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-black text-xs">${editItem ? 'تحديث الصنف' : 'إضافة الصنف'}</button>
+                ${editItem ? `<button type="button" onclick="state.editingItemId=null; window.openAdminPanel();" class="px-3 py-2.5 rounded-xl bg-slate-200 text-navy font-bold text-xs">إلغاء</button>` : ''}
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="text-xs font-black text-navy">قائمة الأصناف الحالية (${state.data.items.length})</h4>
+              ${state.data.items.map(it => `
+                <div class="p-2.5 rounded-xl bg-white border border-[#e2d5c3] flex items-center justify-between gap-2 text-xs">
+                  <div class="min-w-0 flex-1">
+                    <p class="font-extrabold text-navy truncate">${sanitize(it.name)}</p>
+                    <p class="text-[11px] text-slate-500">${sanitize(it.category)} • ${Number(it.price) > 0 ? it.price + ' ج.م' : sanitize(it.priceLabel || 'سعر اليوم')}</p>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button type="button" onclick="window.editMenuItem(${it.id})" class="px-2.5 py-1 rounded-lg bg-[#e6f3fb] text-[#0b74b8] font-bold">تعديل</button>
+                    <button type="button" onclick="window.deleteMenuItem(${it.id})" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-bold">حذف</button>
+                  </div>
+                </div>`).join("")}
+            </div>`;
+        }
+
+        if (state.adminTab === "delivery") {
+          return `
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">إضافة منطقة توصيل</h4>
+              <div class="flex gap-2">
+                <input id="zoneName" placeholder="اسم المنطقة" class="flex-1 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="zoneFee" type="number" placeholder="الرسوم" class="w-24 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <button type="button" onclick="window.addDeliveryZone()" class="px-3 py-2 rounded-xl bg-[#0b74b8] text-white font-black text-xs">إضافة</button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              ${state.data.deliveryZones.map(z => `
+                <div class="p-3 rounded-xl bg-white border border-[#e2d5c3] flex items-center justify-between text-xs font-bold">
+                  <span>${sanitize(z.name)} — <span class="text-[#0b74b8]">${z.fee} ج.م</span></span>
+                  <button type="button" onclick="window.deleteZone(${z.id})" class="text-rose-600 font-extrabold">حذف</button>
+                </div>`).join("")}
+            </div>`;
+        }
+
+        if (state.adminTab === "addons") {
+          return `
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">إضافة خيار جانبي</h4>
+              <div class="flex gap-2">
+                <input id="addonName" placeholder="اسم الإضافة" class="flex-1 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <input id="addonPrice" type="number" placeholder="السعر" class="w-24 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <button type="button" onclick="window.addAddon()" class="px-3 py-2 rounded-xl bg-[#0b74b8] text-white font-black text-xs">إضافة</button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              ${state.data.addons.map(a => `
+                <div class="p-3 rounded-xl bg-white border border-[#e2d5c3] flex items-center justify-between text-xs font-bold">
+                  <span>${sanitize(a.name)} — <span class="text-[#0b74b8]">+${a.price} ج.م</span></span>
+                  <button type="button" onclick="window.deleteAddon(${a.id})" class="text-rose-600 font-extrabold">حذف</button>
+                </div>`).join("")}
+            </div>`;
+        }
+
+        if (state.adminTab === "coupons") {
+          return `
+            <div class="p-3 rounded-2xl bg-[#faf6f0] border border-[#e2d5c3] flex items-center justify-between">
+              <span class="text-xs font-black text-navy">تفعيل نظام الكوبونات في السلة</span>
+              <button type="button" onclick="window.toggleCouponsEnabled()"
+                      class="px-3.5 py-1.5 rounded-xl text-xs font-black ${s.couponsEnabled ? 'bg-emerald-600 text-white' : 'bg-slate-300 text-navy'}">
+                ${s.couponsEnabled ? 'مفعّل ✓' : 'معطّل'}
+              </button>
+            </div>
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">إضافة كوبون خصم</h4>
+              <div class="grid grid-cols-3 gap-2">
+                <input id="cpCode" placeholder="الكود" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white uppercase" />
+                <select id="cpType" class="border border-[#e2d5c3] rounded-xl px-2 py-2 text-xs font-bold bg-white">
+                  <option value="percent">نسبة %</option>
+                  <option value="fixed">مبلغ ج.م</option>
+                </select>
+                <input id="cpVal" type="number" placeholder="القيمة" class="border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              </div>
+              <button type="button" onclick="window.addCoupon()" class="w-full py-2 rounded-xl bg-[#0b74b8] text-white font-black text-xs">حفظ الكوبون</button>
+            </div>
+            <div class="space-y-2">
+              ${state.data.coupons.map((c, idx) => `
+                <div class="p-3 rounded-xl bg-white border border-[#e2d5c3] flex items-center justify-between text-xs font-bold">
+                  <span>${sanitize(c.code)} (${c.type === 'percent' ? c.value + '%' : c.value + ' ج.م'})</span>
+                  <button type="button" onclick="window.deleteCoupon(${idx})" class="text-rose-600 font-extrabold">حذف</button>
+                </div>`).join("")}
+            </div>`;
+        }
+
+        if (state.adminTab === "sync") {
+          const sheetUrl = localStorage.getItem(STORAGE_KEYS.SHEET) || DEFAULT_SHEET_URL;
+          return `
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2.5">
+              <h4 class="text-xs font-black text-[#0b74b8]">تصدير واستيراد Excel (4 تبويبات)</h4>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="window.exportExcel()" class="py-2.5 px-3 rounded-xl bg-emerald-600 text-white font-black text-xs">تصدير ملف Excel</button>
+                <label class="py-2.5 px-3 rounded-xl bg-[#084c7a] text-white font-black text-xs text-center cursor-pointer">
+                  استيراد Excel
+                  <input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="window.importExcel(this)" />
+                </label>
+              </div>
+              <textarea id="tsvPasteBox" rows="3" placeholder="أو الصق جدول البيانات هنا (TSV / CSV: القسم، الاسم، السعر، الوصف، رابط الصورة)"
+                        class="w-full border border-[#e2d5c3] rounded-xl p-2 text-xs font-semibold bg-white"></textarea>
+              <button type="button" onclick="window.importPastedTable()" class="w-full py-2 rounded-xl bg-[#0b74b8] text-white font-bold text-xs">استيراد النص الملصق</button>
+            </div>
+
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2">
+              <h4 class="text-xs font-black text-[#0b74b8]">المزامنة التلقائية مع Google Sheets</h4>
+              <input id="sheetUrlInput" value="${sanitize(sheetUrl)}" placeholder="رابط Google Sheet العام" class="w-full border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+              <button type="button" onclick="window.saveAndSyncSheet()" class="w-full py-2 rounded-xl bg-[#084c7a] text-white font-black text-xs">حفظ الرابط ومزامنة الآن</button>
+            </div>
+
+            <div class="bg-[#faf6f0] p-3.5 rounded-2xl border border-[#e2d5c3] space-y-2">
+              <h4 class="text-xs font-black text-navy">تغيير كلمة مرور الإدارة وضبط المصنع</h4>
+              <div class="flex gap-2">
+                <input id="newAdminPass" type="password" placeholder="كلمة المرور الجديدة" class="flex-1 border border-[#e2d5c3] rounded-xl px-2.5 py-2 text-xs font-bold bg-white" />
+                <button type="button" onclick="window.changeAdminPassword()" class="px-3 py-2 rounded-xl bg-[#0b74b8] text-white font-bold text-xs">تغيير</button>
+              </div>
+              <button type="button" onclick="window.resetFactoryData()" class="w-full py-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 font-extrabold text-xs">استعادة بيانات المنيو الافتراضية</button>
+            </div>
+
+            <div class="bg-slate-900 text-white p-3.5 rounded-2xl space-y-2.5">
+              <h4 class="text-xs font-black text-amber-300">بوابة ترخيص المطور (منظومة تك)</h4>
+              ${!state.vendorUnlocked ? `
+                <div class="flex gap-2">
+                  <input id="vendorKeyInput" type="password" placeholder="مفتاح ترخيص المطور" class="flex-1 bg-white/10 border border-white/20 rounded-xl px-2.5 py-2 text-xs font-bold text-white" />
+                  <button type="button" onclick="window.unlockVendorGate()" class="px-3 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs">تفعيل</button>
+                </div>` : `
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between bg-white/10 p-2.5 rounded-xl">
+                    <span class="text-xs font-bold">وضع الباقة:</span>
+                    <button type="button" onclick="window.togglePackageMode()" class="px-3 py-1 rounded-lg bg-amber-400 text-slate-950 font-black text-xs">
+                      ${s.viewOnlyMode ? 'العرض الذكي (تبديل لـ Pro)' : 'نسخة Pro (تبديل للعرض)'}
+                    </button>
+                  </div>
+                  <button type="button" onclick="window.exportHtml()" class="w-full py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs">
+                    تصدير ملف HTML نظيف للعميل
+                  </button>
+                </div>`}
+            </div>`;
+        }
+        return "";
+      }
+
+      window.saveGeneralSettings = function () {
+        const s = state.data.settings;
+        s.name = document.getElementById("admName").value.trim() || s.name;
+        s.subtitle = document.getElementById("admSub").value.trim();
+        s.whatsapp = normalizeArabicInput(document.getElementById("admWa").value);
+        s.phone1 = normalizeArabicInput(document.getElementById("admP1").value);
+        s.phone2 = normalizeArabicInput(document.getElementById("admP2").value);
+        s.instapayInfo = document.getElementById("admInsta").value.trim();
+        s.openTime = document.getElementById("admOpen").value;
+        s.closeTime = document.getElementById("admClose").value;
+        s.address = document.getElementById("admAddr").value.trim();
+        s.mapsUrl = document.getElementById("admMaps").value.trim();
+        s.facebookUrl = document.getElementById("admFb").value.trim();
+        s.bannerUrl = document.getElementById("admBannerUrl").value.trim();
+        saveStoreData();
+        renderApp();
+        showToast("تم حفظ إعدادات المطعم بنجاح", "success");
+      };
+
+      window.uploadCompressedImage = function (input, target) {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const maxW = target === "banner" ? 900 : 480;
+            const scale = Math.min(1, maxW / img.width);
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
+            if (target === "banner") {
+              document.getElementById("admBannerUrl").value = dataUrl;
+              state.data.settings.bannerUrl = dataUrl;
+              saveStoreData();
+              renderHeaderAndBanner();
+            } else {
+              document.getElementById("itmImg").value = dataUrl;
+            }
+            showToast("تم ضغط الصورة ورفعها بنجاح", "success");
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+
+      window.saveMenuItem = function () {
+        const name = document.getElementById("itmName").value.trim();
+        const category = document.getElementById("itmCat").value.trim() || "🔥 العروض";
+        const price = Number(document.getElementById("itmPrice").value) || 0;
+        const priceLabel = document.getElementById("itmPriceLabel").value.trim();
+        const desc = document.getElementById("itmDesc").value.trim();
+        const image = document.getElementById("itmImg").value.trim();
+        const optsRaw = document.getElementById("itmOpts").value.trim();
+
+        if (!name) { showToast("يرجى إدخال اسم الصنف", "error"); return; }
+
+        const options = optsRaw ? optsRaw.split(',').map(pair => {
+          const [oname, oprice] = pair.split(':');
+          return oname ? { name: oname.trim(), price: Number(oprice) || price } : null;
+        }).filter(Boolean) : [];
+
+        if (!state.data.categories.includes(category)) {
+          state.data.categories.push(category);
+        }
+
+        if (state.editingItemId) {
+          const idx = state.data.items.findIndex(i => Number(i.id) === Number(state.editingItemId));
+          if (idx > -1) {
+            state.data.items[idx] = { ...state.data.items[idx], name, category, price, priceLabel, desc, image, options, isOffer: category === "🔥 العروض" };
+          }
+          state.editingItemId = null;
+        } else {
+          state.data.items.unshift({ id: Date.now(), name, category, price, priceLabel, desc, image, available: true, isOffer: category === "🔥 العروض", options });
+        }
+
+        saveStoreData();
+        renderApp();
+        window.openAdminPanel();
+        showToast("تم حفظ الصنف بنجاح", "success");
+      };
+
+      window.editMenuItem = function (id) { state.editingItemId = id; window.openAdminPanel(); };
+      window.deleteMenuItem = function (id) {
+        state.data.items = state.data.items.filter(i => Number(i.id) !== Number(id));
+        saveStoreData();
+        renderApp();
+        window.openAdminPanel();
+        showToast("تم حذف الصنف");
+      };
+
+      window.addDeliveryZone = function () {
+        const name = document.getElementById("zoneName").value.trim();
+        const fee = Number(document.getElementById("zoneFee").value) || 0;
+        if (!name) return;
+        state.data.deliveryZones.push({ id: Date.now(), name, fee });
+        saveStoreData();
+        window.openAdminPanel();
+      };
+      window.deleteZone = function (id) {
+        state.data.deliveryZones = state.data.deliveryZones.filter(z => Number(z.id) !== Number(id));
+        saveStoreData();
+        window.openAdminPanel();
+      };
+
+      window.addAddon = function () {
+        const name = document.getElementById("addonName").value.trim();
+        const price = Number(document.getElementById("addonPrice").value) || 0;
+        if (!name) return;
+        state.data.addons.push({ id: Date.now(), name, price });
+        saveStoreData();
+        window.openAdminPanel();
+      };
+      window.deleteAddon = function (id) {
+        state.data.addons = state.data.addons.filter(a => Number(a.id) !== Number(id));
+        saveStoreData();
+        window.openAdminPanel();
+      };
+
+      window.toggleCouponsEnabled = function () {
+        state.data.settings.couponsEnabled = !state.data.settings.couponsEnabled;
+        saveStoreData();
+        window.openAdminPanel();
+      };
+      window.addCoupon = function () {
+        const code = normalizeArabicInput(document.getElementById("cpCode").value).toUpperCase();
+        const type = document.getElementById("cpType").value;
+        const value = Number(document.getElementById("cpVal").value) || 0;
+        if (!code || value <= 0) return;
+        state.data.coupons.push({ code, type, value, active: true });
+        saveStoreData();
+        window.openAdminPanel();
+      };
+      window.deleteCoupon = function (idx) {
+        state.data.coupons.splice(idx, 1);
+        saveStoreData();
+        window.openAdminPanel();
+      };
+
+      window.exportExcel = function () {
+        if (!window.XLSX) { showToast("مكتبة Excel غير متاحة حالياً", "error"); return; }
+        const wb = XLSX.utils.book_new();
+        const menuRows = state.data.items.map(i => ({
+          "القسم": i.category,
+          "الاسم": i.name,
+          "السعر": i.price,
+          "وصف_السعر": i.priceLabel || "",
+          "الوصف": i.desc || "",
+          "الخيارات": (i.options || []).map(o => `${o.name}:${o.price}`).join(", "),
+          "رابط_الصورة": i.image || ""
+        }));
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(menuRows), "المنيو");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(state.data.deliveryZones.map(z => ({ "المنطقة": z.name, "الرسوم": z.fee }))), "مناطق التوصيل");
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(state.data.addons.map(a => ({ "الإضافة": a.name, "السعر": a.price }))), "الإضافات");
+        const s = state.data.settings;
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet([{ "الاسم": s.name, "واتساب": s.whatsapp, "العنوان": s.address }]), "الإعدادات");
+        XLSX.writeFile(wb, `${s.name}_Menu.xlsx`);
+      };
+
+      window.importExcel = function (input) {
+        const file = input.files && input.files[0];
+        if (!file || !window.XLSX) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const wb = XLSX.read(e.target.result, { type: "binary" });
+            applyWorkbookData(wb);
+            showToast("تم استيراد بيانات Excel بنجاح!", "success");
+          } catch (err) {
+            showToast("حدث خطأ أثناء قراءة ملف Excel", "error");
+          }
+        };
+        reader.readAsBinaryString(file);
+      };
+
+      function applyWorkbookData(wb) {
+        const menuSheet = wb.Sheets["المنيو"] || wb.Sheets[wb.SheetNames[0]];
+        if (menuSheet) {
+          const rows = XLSX.utils.sheet_to_json(menuSheet);
+          if (rows.length > 0) {
+            const newCats = [];
+            const newItems = rows.map((r, idx) => {
+              const cat = String(r["القسم"] || "أصناف عامة").trim();
+              if (!newCats.includes(cat)) newCats.push(cat);
+              const price = Number(r["السعر"]) || 0;
+              const optsStr = String(r["الخيارات"] || "");
+              const options = optsStr ? optsStr.split(',').map(p => {
+                const [n, pr] = p.split(':');
+                return n ? { name: n.trim(), price: Number(pr) || price } : null;
+              }).filter(Boolean) : [];
+              return {
+                id: Date.now() + idx,
+                category: cat,
+                name: String(r["الاسم"] || "صنف").trim(),
+                price,
+                priceLabel: String(r["وصف_السعر"] || "").trim(),
+                desc: String(r["الوصف"] || "").trim(),
+                image: String(r["رابط_الصورة"] || "").trim(),
+                available: true,
+                isOffer: cat === "🔥 العروض",
+                options
+              };
+            });
+            state.data.categories = newCats;
+            state.data.items = newItems;
+          }
+        }
+        const zoneSheet = wb.Sheets["مناطق التوصيل"];
+        if (zoneSheet) {
+          const zRows = XLSX.utils.sheet_to_json(zoneSheet);
+          if (zRows.length > 0) {
+            state.data.deliveryZones = zRows.map((z, i) => ({ id: i + 1, name: String(z["المنطقة"] || ""), fee: Number(z["الرسوم"]) || 0 }));
+          }
+        }
+        const addonSheet = wb.Sheets["الإضافات"];
+        if (addonSheet) {
+          const aRows = XLSX.utils.sheet_to_json(addonSheet);
+          if (aRows.length > 0) {
+            state.data.addons = aRows.map((a, i) => ({ id: i + 1, name: String(a["الإضافة"] || ""), price: Number(a["السعر"]) || 0 }));
+          }
+        }
+        saveStoreData();
+        renderApp();
+      }
+
+      window.importPastedTable = function () {
+        const raw = document.getElementById("tsvPasteBox").value.trim();
+        if (!raw) return;
+        const lines = raw.split(/\r?\n/);
+        lines.forEach((line, idx) => {
+          const sep = line.includes('\t') ? '\t' : ',';
+          const cols = line.split(sep).map(c => c.trim());
+          if (cols.length >= 2 && cols[1]) {
+            const cat = cols[0] || "🔥 العروض";
+            if (!state.data.categories.includes(cat)) state.data.categories.push(cat);
+            state.data.items.push({
+              id: Date.now() + idx,
+              category: cat,
+              name: cols[1],
+              price: Number(cols[2]) || 0,
+              priceLabel: Number(cols[2]) > 0 ? "" : "سعر اليوم",
+              desc: cols[3] || "",
+              image: cols[4] || "",
+              available: true,
+              isOffer: cat === "🔥 العروض",
+              options: []
+            });
+          }
+        });
+        saveStoreData();
+        renderApp();
+        showToast("تم استيراد الأصناف بنجاح", "success");
+      };
+
+      async function syncFromGoogleSheets(url, silent = false) {
+        if (!url || !window.XLSX) return;
+        const bar = document.getElementById("syncStatusBar");
+        if (bar && !silent) bar.classList.remove("hidden");
+
+        try {
+          let exportUrl = url.trim();
+          const match = exportUrl.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+          if (match && match[1]) {
+            exportUrl = `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=xlsx`;
+          }
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 6000);
+          let res;
+          try {
+            res = await fetch(exportUrl, { signal: controller.signal });
+          } catch (e) {
+            res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(exportUrl)}`, { signal: controller.signal });
+          }
+          clearTimeout(timer);
+          if (res && res.ok) {
+            const buf = await res.arrayBuffer();
+            const wb = XLSX.read(buf, { type: "array" });
+            applyWorkbookData(wb);
+            if (!silent) showToast("تمت المزامنة مع Google Sheets بنجاح", "success");
+          }
+        } catch (e) {
+          if (!silent) showToast("تعذرت المزامنة حالياً", "error");
+        } finally {
+          if (bar) bar.classList.add("hidden");
+        }
+      }
+
+      window.saveAndSyncSheet = function () {
+        const url = document.getElementById("sheetUrlInput").value.trim();
+        localStorage.setItem(STORAGE_KEYS.SHEET, url);
+        syncFromGoogleSheets(url, false);
+      };
+
+      window.changeAdminPassword = function () {
+        const p = normalizeArabicInput(document.getElementById("newAdminPass").value);
+        if (p.length < 4) { showToast("كلمة المرور قصيرة جداً", "error"); return; }
+        localStorage.setItem(STORAGE_KEYS.PASS, pureHash(p));
+        showToast("تم تحديث كلمة المرور بنجاح", "success");
+      };
+
+      window.resetFactoryData = function () {
+        localStorage.removeItem(STORAGE_KEYS.DATA);
+        state.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        saveStoreData();
+        renderApp();
+        window.openAdminPanel();
+        showToast("تمت استعادة البيانات الافتراضية", "success");
+      };
+
+      window.unlockVendorGate = function () {
+        const k = document.getElementById("vendorKeyInput").value;
+        if (checkVendorKey(k)) {
+          state.vendorUnlocked = true;
+          window.openAdminPanel();
+          showToast("تم فتح بوابة ترخيص المطور", "success");
+        } else {
+          showToast("مفتاح الترخيص غير صحيح", "error");
+        }
+      };
+
+      window.togglePackageMode = function () {
+        state.data.settings.viewOnlyMode = !state.data.settings.viewOnlyMode;
+        saveStoreData();
+        renderApp();
+        window.openAdminPanel();
+      };
+
+      window.exportHtml = function () {
+        const clone = document.documentElement.cloneNode(true);
+        const mc = clone.querySelector("#modalContainer");
+        if (mc) mc.innerHTML = "";
+        const tc = clone.querySelector("#toastContainer");
+        if (tc) tc.innerHTML = "";
+        const sheetUrl = localStorage.getItem(STORAGE_KEYS.SHEET) || DEFAULT_SHEET_URL;
+        let htmlStr = "<!DOCTYPE html>\n" + clone.outerHTML;
+        htmlStr = htmlStr.replace(/let DEFAULT_VIEW_ONLY = (true|false);/, `let DEFAULT_VIEW_ONLY = ${Boolean(state.data.settings.viewOnlyMode)};`);
+        htmlStr = htmlStr.replace(/let DEFAULT_SHEET_URL = "[^"]*";/, `let DEFAULT_SHEET_URL = ${JSON.stringify(sheetUrl)};`);
+        const blob = new Blob([htmlStr], { type: "text/html;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "index.html";
+        a.click();
+        showToast("تم تصدير ملف index.html النظيف بنجاح!", "success");
+      };
+
+      window.renderApp = renderApp;
+      renderApp();
+      const savedSheet = localStorage.getItem(STORAGE_KEYS.SHEET) || DEFAULT_SHEET_URL;
+      if (savedSheet) syncFromGoogleSheets(savedSheet, true);
+    })();
+  </script>
+</body>
+</html>
